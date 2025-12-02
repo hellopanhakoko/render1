@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Pay QR</title>
+  <style>
+    body { 
+      font-family:sans-serif; 
+      background: linear-gradient(135deg,#1f1c2c,#928dab); 
+      color:#fff; 
+      display:flex; 
+      align-items:center; 
+      justify-content:center; 
+      height:100vh; 
+      margin:0;
+    }
+    .card { 
+      background: rgba(255,255,255,0.06); 
+      padding:20px; 
+      border-radius:12px; 
+      text-align:center; 
+      width:320px;
+    }
+    img { 
+      max-width:260px; 
+      border-radius:8px; 
+      background:#fff; 
+      padding:6px; 
+    }
+    .status { 
+      margin-top:12px; 
+      font-weight:600; 
+    }
+    .small { 
+      font-size:13px; 
+      opacity:.9; 
+    }
+    .timer { 
+      margin-top:8px; 
+      font-weight:600; 
+      color:#ffd369; 
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h3>Scan to Pay</h3>
+    <p class="small">Amount: ${{ amount }}</p>
+    <img src="data:image/png;base64,{{ qr }}" alt="QR">
+    <div class="timer" id="timer">Time left: 03:00</div>
+    <div id="status" class="status">Status: <span id="st-text" style="color:#ffcc00">UNPAID</span></div>
+    <div class="small">Order: {{ order_id }}</div>
+  </div>
+
+<script>
+  const ORDER_ID = "{{ order_id }}";
+  const totalTime = 180; // 180 seconds
+  let timeLeft = totalTime;
+
+  function formatTime(s) {
+    const min = String(Math.floor(s / 60)).padStart(2, '0');
+    const sec = String(s % 60).padStart(2, '0');
+    return `${min}:${sec}`;
+  }
+
+  const timerEl = document.getElementById('timer');
+
+  // Countdown timer
+  const interval = setInterval(() => {
+    if (timeLeft > 0) {
+      timeLeft--;
+      timerEl.textContent = `Time left: ${formatTime(timeLeft)}`;
+    } else {
+      clearInterval(interval);
+      document.getElementById('st-text').textContent = "EXPIRED";
+      document.getElementById('st-text').style.color = "#ff8a8a";
+      // Redirect to shop when QR expires
+      setTimeout(() => { window.location.href = "/"; }, 1000);
+    }
+  }, 1000);
+
+  // Poll payment status every 5 seconds
+  async function check() {
+    if (timeLeft <= 0) return;
+    try {
+      const res = await fetch("/order_status/" + ORDER_ID);
+      const data = await res.json();
+      const text = document.getElementById("st-text");
+
+      if (data.status === "PAID") {
+        text.textContent = "PAID";
+        text.style.color = "lightgreen";
+        clearInterval(interval);
+
+      } else {
+        text.textContent = data.status || "UNPAID";
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  setInterval(check, 5000);
+  check();
+</script>
+</body>
+</html>
