@@ -1,5 +1,16 @@
-Flask==2.3.2
-requests
-qrcode
-pytz
-bakong_khqr
+Flask==2.3.3
+sqlite3  # Built-in, no need to list
+os  # Built-in
+random  # Built-in
+string  # Built-in
+bakong_khqr==1.0.0  # Or latest version; check PyPI
+qrcode[pil]==7.4.2
+Pillow==10.0.1  # For qrcode image generation
+io  # Built-in
+datetime  # Built-in
+pytz==2023.3
+threading  # Built-in
+time  # Built-in
+base64  # Built-in
+requests==2.31.0
+logging  # Built-in
