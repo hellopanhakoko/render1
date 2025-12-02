@@ -1,7 +1,9 @@
-Flask==2.3.3      
-gunicorn
-
-
-
-
+fastapi
+uvicorn
+jinja2
+requests
+qrcode
+pytz
+bakong_khqr
+sqlite3
 
