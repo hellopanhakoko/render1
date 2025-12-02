@@ -1,16 +1,12 @@
-Flask==2.3.3   
-string  
+Flask==2.3.3     
 bakong_khqr==1.0.0  
 qrcode[pil]==7.4.2
 Pillow==10.0.1  
-io 
-datetime 
 pytz==2023.3
-threading  
-time   
+threading   
 requests==2.31.0
-logging 
 gunicorn
+
 
 
 
