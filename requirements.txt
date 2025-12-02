@@ -1,5 +1,4 @@
 Flask==2.3.3  
-os  
 random  
 string  
 bakong_khqr==1.0.0  
@@ -13,4 +12,5 @@ time
 requests==2.31.0
 logging 
 gunicorn
+
 
