@@ -1,5 +1,4 @@
-Flask==2.3.3  
-random  
+Flask==2.3.3   
 string  
 bakong_khqr==1.0.0  
 qrcode[pil]==7.4.2
@@ -12,5 +11,6 @@ time
 requests==2.31.0
 logging 
 gunicorn
+
 
 
