@@ -1,5 +1,4 @@
-Flask==2.3.3
-sqlite3  
+Flask==2.3.3  
 os  
 random  
 string  
@@ -10,8 +9,8 @@ io
 datetime 
 pytz==2023.3
 threading  
-time  
-base64  
+time   
 requests==2.31.0
 logging 
 gunicorn
+
